@@ -1,0 +1,30 @@
+ static int ways(int n, int[] coins) {
+
+        int[][] table=new int[coins.length+1][n+1];
+
+          
+        for(int i=0;i<n+1;i++)
+        {
+            table[0][i]=0;
+        }
+         for(int i=0;i<coins.length+1;i++)
+        {
+            table[i][0]=1;
+        }
+        for(int rows=1;rows<coins.length+1;rows++)
+        {
+            for( int col=1;col<n+1;col++)
+            {
+                if(col<coins[rows-1])
+                {
+                    table[rows][col]=table[rows-1][col];
+                }
+                else{
+                table[rows][col]=table[rows-1][col]+table[rows][col-coins[rows-1]];
+                }
+            }
+        }
+        return table[coins.length][n];
+
+
+    }
