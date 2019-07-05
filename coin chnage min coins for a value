@@ -1,0 +1,76 @@
+#include<stdio.h>
+int min(int a ,int b)
+{
+	return (a<b)?a:b;
+}
+int mincoin(int coins[],int n,int expectval)
+{
+	int mat[n+1][expectval+1];
+	int i;
+	int j;
+		for(i=0;i<=n;i++)
+	{
+		
+	mat[i][0]=0;
+	}
+	for(j=0;j<=expectval;j++)
+	{
+		mat[0][j]=0;
+	}
+	for(j=0;j<=expectval;j++)
+	{
+		mat[1][j]=((j-1)/coins[0])+1;
+	}
+	for(i=2;i<=n;i++)
+	{
+		for(j=1;j<=expectval;j++)
+		{
+		
+			if(j>=coins[i-1]){
+				mat[i][j]=min(mat[i][j-coins[i-1]]+1,mat[i-1][j]);
+			}
+			else
+			{
+				mat[i][j]=mat[i-1][j];
+			}
+			
+		}
+	}
+	
+	
+	
+	
+		for(i=0;i<=n;i++)
+	{
+		for(j=0;j<=expectval;j++)
+		{
+			printf("%d->",mat[i][j]);
+		}
+		printf("\n");
+	}
+	return mat[n][expectval];
+}
+void main()
+{
+int coins[]={1,5,6,8};
+int n=4;
+int expectval=11;
+int ans=mincoin(coins,n,expectval);
+printf("%d",ans);
+}
+
+
+
+
+//output:-
+
+
+0->0->0->0->0->0->0->0->0->0->0->0->
+0->1->2->3->4->5->6->7->8->9->10->11->
+0->1->2->3->4->1->2->3->4->5->2->3->
+0->1->2->3->4->1->1->2->3->4->2->2->
+0->1->2->3->4->1->1->2->1->2->2->2->
+2
+--------------------------------
+Process exited after 1.141 seconds with return value 1
+Press any key to continue . . .
